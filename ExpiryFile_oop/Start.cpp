@@ -38,66 +38,21 @@ Start::~Start(){}
 	// not needed for this class
 
 void Start::handleInput(int argc, char **argv) {
-	//Input input;
-	Help help;
-	FileList fileList;
-	std::string hash_string;
-	Hash hash;
 
 	input.set_input(argc,argv);
-	try {
-		input.extract_prog_mode();
-	}
-	catch (Exception e) {
-		std::cerr << e.to_string() << std::endl;
-		return;
-	}
+	input.extract_prog_mode();
 
 	switch (input.get_prog_mode()) {
 	case 'h':  // start the help mode
-		help.print();
+		help_Mode();
 		break;
 	case 'l': // start the list mode
-		try {
-			fileList.load();
-		}
-		catch (Exception e) {
-			std::cerr << e.to_string() << std::endl;
-			return;
-		}
-		fileList.print();
-		std::cout << "Type r for remove or q for quit." << std::endl;
-		std::cout << std::endl;
-		switch (getche()) {
-		case 'r':
-			std::cout << "hash?" << std::endl;
-			std::cin >> hash_string;
-			std::cout << std::endl;
-			hash.set_hash(hash_string);
-			try {
-				fileList.remove(hash);
-				fileList.save();
-			}
-			catch (Exception e) {
-				std::cerr << e.to_string() << std::endl;
-				return;
-			}
-			break;
-		default:
-			std::cout << std::endl;
-			break;
-		}
+		list_Mode();
 		break;
 	case 'c': // starts the check mode
 		break;
 	case '1': // everthing is fine goes further with normal mode
-		try {
-			input.extract_input_values();
-			handleFileList();
-		}
-		catch (Exception e) {
-			std::cerr << e.to_string() << std::endl;
-		}
+		new_Mode();
 		break;
 	default: // normaly, this sould never happend
 		std::cerr << "Something goes horrible wrong!" << std::endl;
@@ -105,41 +60,84 @@ void Start::handleInput(int argc, char **argv) {
 }
 
 //bool handleFileAndList(input input) {
-void Start::handleFileList(){
-	//load the list
+void Start::new_Mode(){
+
 	FileList fileList;
-	try{
-		fileList.load();
-	}
-	catch (Exception e) {
-		std::cerr << e.to_string() << std::endl;
-	}
+	
+	input.extract_input_values();
+	
+	//load the list
+	fileList.load();
 
 	// check whether the file exist
 	std::ifstream ifs(input.get_path());
 	if (ifs.fail()) {
-		std::cerr << input.get_path() << " file does not exists!" << std::endl;
+		throw Exception(7);
 	}
 	ifs.close();
 
 	// check whether the file is already in the list.
-	try {
-		Hash hash(input.get_path());
-		fileList.find(hash);
-	}
-	catch (Exception e) {
-		std::cerr << e.to_string() << std::endl;
+	if(fileList.isFileInList(input.get_path())){
+		throw Exception(9);
 	}
 	
 	// add the new file to the list
 	fileList.add(input.get_path(), input.get_expiry_date(), input.get_modus());
 	
 	// save the list in the list.txt file
-	try {
-		fileList.save();
-	}
-	catch (Exception e) {
-		std::cerr << e.to_string() << std::endl;
-	}
+	fileList.save();
+}
 
+void Start::list_Mode(){
+	FileList fileList;
+
+	fileList.load();
+	fileList.print();
+	std::cout << "Type r for remove or q for quit." << std::endl;
+	std::cout << std::endl;
+	switch (getche()) {
+	case 'r':
+		list_Mode_r(&fileList);
+		break;
+	case 'f':
+		list_Mode_f();
+		break;
+	case 's':
+		list_Mode_s();
+		break;
+	case 'o':
+		list_Mode_o();
+		break;
+	default:
+		std::cout << std::endl;
+		break;
+	}
+}
+
+void Start::list_Mode_r(FileList *fileList){ // remove mode
+	int id;
+	std::cout << std::endl;
+	std::cout << "id?" << std::endl;
+	std::cin >> id;
+	std::cout << std::endl;
+	fileList->remove(id);
+	fileList->save();
+}
+
+void Start::list_Mode_f(FileList *fileList){ // filter mode
+}
+
+void Start::list_Mode_s(FileList *fileList){ // search mode
+}
+
+void Start::list_Mode_o(FileList *fileList){ // sort mode
+}
+
+void Start::help_Mode(){
+	Help help;
+	help.print();
+}
+
+void Start::check_Mode() {
+	
 }

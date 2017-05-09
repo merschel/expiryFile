@@ -11,8 +11,7 @@ class Date{
 		// properties (private)
 		// ********************
 		
-		std::string format;
-		int date;
+		std::string date;
 		bool ok;
 		
 		// *****************

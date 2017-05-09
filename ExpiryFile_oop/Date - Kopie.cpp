@@ -152,7 +152,10 @@ tm Date::date2struct(std::string date) {
 	std::string month;
 	std::string year;
 	// split the date by dot.
-	
+	std::istringstream ss(date);
+	getline(ss, day, '.');
+	getline(ss, month, '.');
+	getline(ss, year, '.');
 	ts.tm_mon = strtol(month.c_str(), NULL, 10) - 1;  // -1, since 0 = Jan, 1 = Feb, ... in struct tm
 	ts.tm_year = getProperYear(year);
 	ts.tm_mday = strtol(day.c_str(), NULL, 10);
@@ -162,14 +165,6 @@ tm Date::date2struct(std::string date) {
 	ts.tm_hour = 13; // to set the day explicit set the hour to middle of the day. 13 is 12 o'clock since min == 0 and sec == 0!
 
 	return ts;
-}
-
-void Date::splitDate(std::string date){
-	std::istringstream ssd(date);
-	getline(ssd, day, '.');
-	getline(ssd, month, '.');
-	getline(ssd, year, '.');
-	StrToDate(date);
 }
 
 // ****************
@@ -182,21 +177,18 @@ Date::Date(){
 	date    = ""; 
 }
 		
-/*Date::Date(std::string _date){
-	format
-	/*ok = validDate(_date);
+Date::Date(std::string _date){
+	ok = validDate(_date);
 	if(ok){
 		date = adjustProperFormat(_date) ;
 	}
 	else{
 		date = "";
 	}
-}*/
+}
 		
 // Destructor
-Date::~Date(){
-	format = "dd.mm.yyyy";  // default
-}
+Date::~Date(){}
 
 // Getter
 std::string Date::to_string(){
@@ -216,10 +208,6 @@ void Date::set_date(std::string _date){
 	else{
 		date = "";
 	}		
-}
-
-void Date::set_format(std::string _format){
-	format = _format;
 }
 
 // other function

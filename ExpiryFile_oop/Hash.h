@@ -33,12 +33,13 @@ class Hash{
 		// Constructor
 		
 		Hash();
-		Hash(std::string path);
 		
 		// Destructor
+		
 		~Hash();
 		
 		// Getter
+		
 		std::string to_string();
 		
 		// Setter 
@@ -46,5 +47,7 @@ class Hash{
 		void set_hash(std::string _hash);
 
 		// other functions
+		
 		bool compare(Hash _hash);
+		void compute(std::string path);
 };

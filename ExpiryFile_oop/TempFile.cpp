@@ -24,8 +24,7 @@ TempFile::TempFile(Hash _hash, std::string _path, Date _expiry_date, std::string
 }
 
 TempFile::TempFile(std::string _path, Date _expiry_date, std::string _modus) {
-	Hash hash(_path);
-	std::cout << "hash in TempFile : " << hash.to_string() << std::endl;
+	hash.compute(_path);
 	path = _path;
 	expiry_date = _expiry_date;
 	modus = _modus;

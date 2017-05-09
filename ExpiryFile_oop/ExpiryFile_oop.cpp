@@ -1,12 +1,20 @@
 #include "stdafx.h"
 #include "Start.h"
+#include "tempFile.h"
+#include "Exception.h"
 /* run this program using the console pauser or add your own getch, system("pause") or input loop */
 
 int main(int argc, char** argv) {
 
 
-	Start start;
+Start start;
+try {
 	start.handleInput(argc,argv);
+}catch (Exception e){
+	std::cout << e.to_string() << std::endl;
+}
+	
+	
 	//start.handleFileList();
 
 
@@ -60,8 +68,8 @@ int main(int argc, char** argv) {
 	// **************
 
 	Date date1("22.03.2019");
-	tempFile tf1("tempFiles\\Test.txt",date1,"2");
-
+	TempFile tf1("tempFiles\\Test.txt",date1,"2");
+ 
 
 	std::cout << "hash in main: " << tf1.get_hash().to_string() << std::endl;
 	std::cout << tf1.get_path() << std::endl;
@@ -72,7 +80,7 @@ int main(int argc, char** argv) {
 	//	tempFile tf2(hash2,"tempFiles\\Text.docx",date1,"2");
 	//	std::cout << tf1.get_hash().compare(tf2.get_hash()) << std::endl;
 
-	*/
+*/
 
 
 	

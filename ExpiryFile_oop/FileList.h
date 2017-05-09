@@ -1,3 +1,4 @@
+#pragma once
 #include <list>
 #include "TempFile.h"
 class FileList{
@@ -48,6 +49,8 @@ class FileList{
 		void save();
 		void print();
 		void remove(Hash hash);
+		void remove(int id);
 		void add(std::string path, Date expiry_date, std::string modus);
 		std::list<TempFile>::iterator find(Hash hash);
+		bool isFileInList(std::string path);
 };

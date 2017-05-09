@@ -64,6 +64,18 @@ std::string Exception::to_string() {
 	case 6:
 		ess << PROG_NAME << ": Hash is not in the List " << LIST_NAME << std::endl;
 		return ess.str();
+	case 7:
+		ess << PROG_NAME << ": File does not exist." << std::endl;
+		return ess.str();
+	case 8:
+		ess << PROG_NAME << ": The md5 sum of this file can not be calculated!" << std::endl;
+		return ess.str();
+	case 9:
+		ess << PROG_NAME << ": File is already in the list." << std::endl;
+		return ess.str();
+	case 10:
+		ess << PROG_NAME << ": Id not in the list." << std::endl;
+		return ess.str();			
 	default:
 		return "A unspecific error occurred!";
 	}

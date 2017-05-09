@@ -1,5 +1,6 @@
 #pragma once
 #include "Input.h"
+#include "FileList.h"
 class Start{
 	private:
 		// ********************
@@ -12,7 +13,14 @@ class Start{
 		// methods (private)
 		// *****************
 
-			// not needed for this class
+		void new_Mode();
+		void list_Mode();
+		void list_Mode_r(FileList *fileList);
+		void list_Mode_f(FileList *fileList);
+		void list_Mode_s(FileList *fileList);
+		void list_Mode_o(FileList *fileList);
+		void check_Mode();
+		void help_Mode();
 		
 	public:
 		
@@ -45,6 +53,5 @@ class Start{
 		// other functions
 		
 		void handleInput(int argc, char **argv);
-		void handleFileList();
-
+		
 };

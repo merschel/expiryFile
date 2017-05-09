@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "Hash.h"
 #include <string>
+#include "Exception.h"
 // *****************
 // methods (private)
 // *****************
@@ -15,20 +16,6 @@
 
 Hash::Hash(){
 	hash = "";
-}
-
-Hash::Hash(std::string path) {
-	// calc the md5 hash 
-	hashwrapper *hw = new md5wrapper();
-	try {
-		hash = hw->getHashFromFile(path);
-		std::cout << "hash in Hash: " << hash << std::endl;
-	}
-	catch (hlException &e) {
-		std::cerr << "The md5 sum of this file can not be calculated!" << std::endl;
-		//std::cerr << e << std::endl;
-		hash = "";
-	}
 }
 
 // Destructor
@@ -52,5 +39,16 @@ void Hash::set_hash(std::string _hash) {
 
 bool Hash::compare(Hash _hash){
 	return hash == _hash.to_string();
+}
+
+void Hash::compute(std::string path){
+	// calc the md5 hash 
+	hashwrapper *hw = new md5wrapper();
+	try {
+		hash = hw->getHashFromFile(path);
+	}
+	catch (hlException &e) {
+		throw Exception(8);
+	}
 }
 
