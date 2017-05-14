@@ -21,12 +21,7 @@ class Start{
 		void list_Mode_o(FileList *fileList);
 		void check_Mode();
 		void help_Mode();
-		void check_Mode_0(FileList fileList, TempFile tempFile);
-		void check_Mode_1(FileList fileList, TempFile tempFile);
-		void check_Mode_2(FileList fileList, TempFile tempFile);
-		void check_Mode_3(FileList fileList, TempFile tempFile);
 		bool existsFile(std::string path);
-		void Start::check_Mode_massage(TempFile tempFile, std::string text);
 	public:
 		
 		// *******************

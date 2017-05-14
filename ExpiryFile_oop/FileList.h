@@ -1,5 +1,6 @@
 #pragma once
 #include <list>
+#include <vector>
 #include "TempFile.h"
 class FileList{
 	private:
@@ -55,6 +56,12 @@ class FileList{
 		void add(std::string path, Date expiry_date, std::string modus);
 		std::list<TempFile>::iterator find(Hash hash);
 		bool isFileInList(std::string path);
-		void findExpiredFile();
 		bool deleteFile();
+		void SearchAndTreat();
+		bool existsFile(std::string path);
+		void check_Mode_0(TempFile tempFile);
+		void check_Mode_1(TempFile tempFile);
+		void check_Mode_2(TempFile tempFile);
+		void check_Mode_3(TempFile tempFile);
+		void check_Mode_massage(TempFile tempFile, std::string text);
 };
