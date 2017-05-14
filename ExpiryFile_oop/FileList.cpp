@@ -165,13 +165,14 @@ void FileList::SearchAndTreat() {
 	//for (it = fileList.begin(); it != fileList.end(); it++) {
 	while (it != fileList.end()) {
 		TempFile tempFile = *it;
-		if (!tempFile.get_expiry_date().isDateInFuture()) { // find a rooten file int the list
+		if (!tempFile.get_expiry_date().isDateInFuture()) { // if the file is rotten
 			
 			// check whether the file still exist
 			if (!existsFile(tempFile.get_path())) {
 				check_Mode_massage(tempFile, "do not exist anymore.");
 				std::cout << "    Remove from list now? (y/n) ";
 				if (getche() == 'y') {
+					std::cout << std::endl;
 					remove();
 					continue;
 				}
@@ -183,6 +184,7 @@ void FileList::SearchAndTreat() {
 				check_Mode_massage(tempFile, "has changed.");
 				std::cout << "    Remove from list now? (y/n) ";
 				if (getche() == 'y') {
+					std::cout << std::endl;
 					remove();
 					continue;
 				}
@@ -206,6 +208,9 @@ void FileList::SearchAndTreat() {
 			}
 
 		}
+		else { // if the expiry date of the file still in the future
+			it++;
+		}
 	}
 }
 
@@ -221,6 +226,7 @@ bool FileList::existsFile(std::string path) {
 }
 
 void FileList::check_Mode_0(TempFile tempFile) {
+	std::cout << " -> Try to delete a file!" << std::endl;
 	if (deleteFile()) {
 		remove();
 	}
@@ -234,6 +240,8 @@ void FileList::check_Mode_1(TempFile tempFile) {
 	if (deleteFile()) {
 		remove();
 		check_Mode_massage(tempFile, "has deleted.");
+		std::cout << "    Press any key to go further! ";
+		getche();
 	}
 	else {
 		std::cerr << "can not delete the file " << tempFile.get_path() << std::endl;
@@ -245,6 +253,7 @@ void FileList::check_Mode_2(TempFile tempFile) {
 	check_Mode_massage(tempFile, "is registered for delete.");
 	std::cout << "    Delete File and remove from list now? (y/n) ";
 	if (getche() == 'y') {
+		std::cout << std::endl;
 		if (deleteFile()) {
 			remove();
 		}
@@ -252,6 +261,9 @@ void FileList::check_Mode_2(TempFile tempFile) {
 			std::cerr << "can not delete the file " << tempFile.get_path() << std::endl;
 			it++;
 		}
+	}
+	else {
+		it++;
 	}
 }
 
@@ -261,8 +273,6 @@ void FileList::check_Mode_3(TempFile tempFile) {
 	getche();
 	it++;
 }
-
-
 
 void FileList::check_Mode_massage(TempFile tempFile, std::string text) {
 	std::cout << std::endl;

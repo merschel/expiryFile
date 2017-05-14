@@ -8,6 +8,8 @@ class Start{
 		// ********************
 		
 		Input input;
+		int argc;
+		char **argv;
 
 		// *****************
 		// methods (private)
@@ -22,6 +24,7 @@ class Start{
 		void check_Mode();
 		void help_Mode();
 		bool existsFile(std::string path);
+
 	public:
 		
 		// *******************
@@ -48,10 +51,10 @@ class Start{
 	
 		// Setter 
 		
-			// not needed for this class
+		void set_input(int argc,char **argv);
 
 		// other functions
 		
-		void handleInput(int argc, char **argv);
+		void handleInput();
 		
 };

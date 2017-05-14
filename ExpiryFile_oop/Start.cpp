@@ -31,15 +31,17 @@ Start::~Start(){}
 	
 // Setter 
 		
-	// not needed for this class
+void Start::set_input(int _argc, char **_argv) {
+	argc = _argc;
+	argv = _argv;
+}
 
 // other functions
 		
 	// not needed for this class
 
-void Start::handleInput(int argc, char **argv) {
-
-	input.set_input(argc,argv);
+void Start::handleInput() {
+	input.set_input(argc, argv);
 	input.extract_prog_mode();
 
 	switch (input.get_prog_mode()) {

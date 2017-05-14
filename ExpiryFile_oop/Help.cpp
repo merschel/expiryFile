@@ -62,8 +62,11 @@ void Help::print() {
 	std::cout << "|---------------------------------------------------------------|" << std::endl;
 	std::cout << "| -l | open the current list      |                             |" << std::endl;
 	std::cout << "|===============================================================|" << std::endl;
+	std::cout << "| -c | check the list and delete  |                             |" << std::endl;
+	std::cout << "|    | files which are rotten.    |                             |" << std::endl;
+	std::cout << "|===============================================================|" << std::endl;
 	std::cout << std::endl;
-	std::cout << "If you want to set a new expiry date to a file ou have to set the" << std::endl;
+	std::cout << "If you want to set a new expiry date to a file you have to set the" << std::endl;
 	std::cout << "first 3 parameter (p,d,m). For instant: " << std::endl;
 	std::cout << "   " << PROG_NAME << " -p C:/Users/uselessFile.txt -d 20.04.2017 -m 1" << std::endl;
 	std::cout << "The order is not importent!" << std::endl;
