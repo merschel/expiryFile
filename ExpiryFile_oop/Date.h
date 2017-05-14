@@ -11,8 +11,7 @@ class Date{
 		// properties (private)
 		// ********************
 		
-		std::string format;
-		int date;
+		std::string date;
 		bool ok;
 		
 		// *****************
@@ -24,7 +23,6 @@ class Date{
 		bool checkMonth(int month);
 		int getProperYear(std::string year);
 		bool checkDay(int day, int month, int year);
-		bool isDateInFuture(time_t t);
 		bool isLeapYear(int year);
 		std::string addLeadingZero(std::string s);
 		tm date2struct(std::string date);
@@ -57,4 +55,6 @@ class Date{
 		void set_date(std::string _date);
 		
 		// other functions
+		
+		bool isDateInFuture();
 };

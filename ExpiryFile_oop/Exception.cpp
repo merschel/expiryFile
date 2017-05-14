@@ -21,8 +21,13 @@ Exception::Exception(){
 
 Exception::Exception(int _exception){
 	exception = _exception;
+	additionalNote = "";
 }
 		
+Exception::Exception(int _exception, std::string _additionalNote) {
+	exception = _exception;
+	additionalNote = _additionalNote;
+}
 // Destructor
 
 Exception::~Exception(){
@@ -45,38 +50,46 @@ std::string Exception::to_string() {
 	switch (exception) {
 	case 0:
 		ess << PROG_NAME << ": Miss some parameter." << std::endl;
-		return ess.str();
+		break;
 	case 1:
 		ess << PROG_NAME << ": Expiry date is not valid." << std::endl;
-		return ess.str();
+		break;
 	case 2:
 		ess << PROG_NAME << ": The value for -m is not allowed." << std::endl;
-		return ess.str();
+		break;
 	case 3:
 		ess << PROG_NAME << ": You use unknown parameter. Type -h for more help." << std::endl;
-		return ess.str();
+		break;
 	case 4:
 		ess << PROG_NAME << ": Unable to open file " << LIST_NAME << std::endl;
-		return ess.str();
+		break;
 	case 5:
 		ess << PROG_NAME << ": Unable to save file " << LIST_NAME << std::endl;
-		return ess.str();
+		break;
 	case 6:
 		ess << PROG_NAME << ": Hash is not in the List " << LIST_NAME << std::endl;
-		return ess.str();
+		break;
 	case 7:
 		ess << PROG_NAME << ": File does not exist." << std::endl;
-		return ess.str();
+		break;
 	case 8:
 		ess << PROG_NAME << ": The md5 sum of this file can not be calculated!" << std::endl;
-		return ess.str();
+		break;
 	case 9:
 		ess << PROG_NAME << ": File is already in the list." << std::endl;
-		return ess.str();
+		break;
 	case 10:
 		ess << PROG_NAME << ": Id not in the list." << std::endl;
-		return ess.str();			
+		break;
+	case 11:
+		ess << PROG_NAME << ": ." << std::endl;
+		break;
 	default:
 		return "A unspecific error occurred!";
 	}
+
+	ess << std::endl;
+	ess << additionalNote << std::endl;
+
+	return ess.str();
 }

@@ -1,12 +1,14 @@
 #pragma once
 #include <string>
-class Exception{
+#include <exception>
+class Exception : public std::exception {
 	private:
 		// ********************
 		// properties (private)
 		// ********************
 		
 		int exception;
+		std::string additionalNote;
 
 		// *****************
 		// methods (private)
@@ -29,6 +31,7 @@ class Exception{
 		
 		Exception();
 		Exception(int _exception);
+		Exception(int _exception, std::string _additionalNote);
 		
 		// Destructor
 

@@ -25,10 +25,14 @@ FileList::~FileList(){}
 
 // Getter
 	
-std::list<TempFile> FileList::get_fileList() {
+std::list<TempFile> FileList::get_list() {
 	return fileList;
 }
 	
+std::list<TempFile>::iterator FileList::get_iterator(){
+	return it;
+}	
+
 // Setter 
 		
 	// not needed for this class
@@ -40,10 +44,9 @@ void FileList::load() {
 	std::string hash_string, path, expiry_date_string, modus, line;
 	std::ifstream file(LIST_NAME);
 	if (file.is_open()) {
-		std::list<TempFile>::iterator it = fileList.begin();
+		Hash hash;
+		Date expiry_date;
 		while (getline(file, line)) { //go through the file 
-			Hash hash;
-			Date expiry_date;
 			std::istringstream ss(line);   // in the file: hash, path, date, modus
 			getline(ss, hash_string, LIST_DELIMITER);
 			getline(ss, path, LIST_DELIMITER);
@@ -51,7 +54,7 @@ void FileList::load() {
 			getline(ss, modus, LIST_DELIMITER);
 			hash.set_hash(hash_string);
 			expiry_date.set_date(expiry_date_string);
-			TempFile tempFile(hash, path, expiry_date, modus);
+			TempFile tempFile(hash, path, expiry_date, modus);    // <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< Vieleicht auslagern
 			fileList.push_back(tempFile);
 		}
 		file.close();
@@ -64,7 +67,6 @@ void FileList::load() {
 //This function save the list in a file LIST_NAME.
 // return true if successful saved, ohterwise false
 void FileList::save() {
-	std::list<TempFile>::iterator it;
 	std::ofstream file(LIST_NAME);
 	if (file.is_open()) {
 		for (it = fileList.begin(); it != fileList.end(); it++) {
@@ -82,8 +84,7 @@ void FileList::save() {
 }
 
 void FileList::print() {
-	std::list<TempFile>::iterator it;
-	int i = 1;
+	int id = 1;
 	int s = fileList.size();
 	int m = (s == 0) ? 1 : floor(log10(s)) + 1;
 		
@@ -94,9 +95,9 @@ void FileList::print() {
 	std::cout << "| ID"<< std::string(m - 1,' ') <<"| Hash                             | expiry date | modus | path + file " << std::endl;
 	std::cout << "|---------------------------------------------------------------------------" << std::endl;
 	
-	for (it = fileList.begin(); it != fileList.end(); it++, i++) { // print the list to the screen
+	for (it = fileList.begin(); it != fileList.end(); it++, id++) { // print the list to the screen
 		TempFile tempFile = *it;
-		std::cout << "| " << std::string(m-(floor(log10(i)) + 1),' ') << i //std::string(m-(floor(log10(i)) + 1),' ') <<
+		std::cout << "| " << std::string(m-(floor(log10(id)) + 1),' ') << id
 				  << " | " << tempFile.get_hash().to_string()
 			      << " | " << tempFile.get_expiry_date().to_string()
 			      << "  |   " << tempFile.get_modus() 
@@ -112,27 +113,20 @@ void FileList::add(std::string path, Date expiry_date, std::string modus) {
 	fileList.push_back(tempFile);
 }
 
-void FileList::remove(Hash hash) {
-	try{
-		std::list<TempFile>::iterator it = find(hash);
-		fileList.erase(it);
-	}
-	catch (Exception e) {
-		std::cerr << e.to_string() << std::endl;
-	}
-}
-
 void FileList::remove(int id) {
 	if(id <= 0 || id > fileList.size()){
 		throw Exception(10);
 	}
-	std::list<TempFile>::iterator it = fileList.begin();
+	it = fileList.begin();
 	std:advance(it,id-1);
 	fileList.erase(it);
 }
 
+void FileList::remove() {
+	fileList.erase(it);
+}
+
 std::list<TempFile>::iterator FileList::find(Hash hash) {
-	std::list<TempFile>::iterator it;
 	for (it = fileList.begin(); it != fileList.end(); it++) {
 		TempFile tempFile = *it;
 		if (tempFile.get_hash().compare(hash)) {
@@ -145,7 +139,6 @@ std::list<TempFile>::iterator FileList::find(Hash hash) {
 bool FileList::isFileInList(std::string path){
 	Hash hash;
 	hash.compute(path);
-	std::list<TempFile>::iterator it;
 	for (it = fileList.begin(); it != fileList.end(); it++) {
 		TempFile tempFile = *it;
 		if (tempFile.get_hash().compare(hash) && tempFile.get_path() == path ){
@@ -153,4 +146,26 @@ bool FileList::isFileInList(std::string path){
 		}
 	}
 	return false;
+}
+
+void FileList::findExpiredFile(){
+	time_t now;
+	now = time(NULL);
+	for(it = fileList.begin(); it != fileList.end(); it++){
+		TempFile tempFile = *it;
+		if(!tempFile.get_expiry_date().isDateInFuture()){
+			return; // leave the the iterator in his position, use get_iterator() 
+		}
+	}
+	it = fileList.end(); // if no rotten file is found
+}
+
+bool FileList::deleteFile() {
+	TempFile tempFile = *it;
+	if (std::remove( tempFile.get_path().c_str() )) {
+		return true;
+	}
+	else {
+		return false;
+	}
 }

@@ -8,7 +8,8 @@ class FileList{
 		// ********************
 		
 		std::list<TempFile> fileList;
-
+		std::list<TempFile>::iterator it;
+		
 		// *****************
 		// methods (private)
 		// *****************
@@ -37,8 +38,9 @@ class FileList{
 
 		// Getter
 		
-		std::list<TempFile> get_fileList();
-	
+		std::list<TempFile> get_list();
+		std::list<TempFile>::iterator get_iterator();
+		
 		// Setter 
 		
 			// not needed for this class
@@ -48,9 +50,11 @@ class FileList{
 		void load();
 		void save();
 		void print();
-		void remove(Hash hash);
 		void remove(int id);
+		void remove();
 		void add(std::string path, Date expiry_date, std::string modus);
 		std::list<TempFile>::iterator find(Hash hash);
 		bool isFileInList(std::string path);
+		void findExpiredFile();
+		bool deleteFile();
 };
