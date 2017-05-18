@@ -26,13 +26,13 @@ This check whether some files are  expire and treat than depending on the modus.
 
 With 
 
-expiryFile -l 
+    expiryFile -l 
 
 the programm will print the curred list. Here you can also remove files from the list.
 
 With 
 
-expiryFile -h
+    expiryFile -h
 
 the programm will print some help informations. 
 
