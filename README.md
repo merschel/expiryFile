@@ -1,6 +1,6 @@
 # Warning information
 
-First! In the currend state I do NOT recommend to use this programm.
+First! The programm works (at least for me) BUT since these project is in a early state I do NOT recommend to use this programm.
 
 # Idea behind this project
 
@@ -16,7 +16,7 @@ The workflow is as follow:
 
     expiryFile -p \[path to the temporary file\] -d \[expiry date\] -m \[modus\]
 
-This register the file with the coosen expiry date. The expiry date have to be in the future and have to be in the format dd.mm.yyyy (this is the german format, more formats will follow). With the modus the user can define what will happend with the file when the expiry date is reach. Allowed are 0,1,2,3. With 0 the programm will delete the file without any information or ask for permission. With 1 the file will be deleted, but the user will get an information about it. With 2 the programm aks the user whether the file can be deletet or not. With 3 the user will get only a information that the file still exist. 
+This register the file with the chosen expiry date. The expiry date have to be in the future and have to be in the format dd.mm.yyyy (this is the german format, more formats will follow). With the modus the user can define what will happend with the file when the expiry date is reach. Allowed are 0,1,2,3. With 0 the programm will delete the file without any information or ask for permission. With 1 the file will be deleted, but the user will get an information about it. With 2 the programm aks the user whether the file can be deletet or not. With 3 the user will get only a information that the file still exist. 
 
 On Windows I have put a shortcut in the autostart with the command -c 
 
