@@ -51,7 +51,7 @@ class FileList{
 		void load();
 		void save();
 		void print();
-		void remove(int id);
+		void remove(unsigned int id);
 		void remove();
 		void add(std::string path, Date expiry_date, std::string modus);
 		std::list<TempFile>::iterator find(Hash hash);

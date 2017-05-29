@@ -73,6 +73,7 @@
 #define HASHWRAPPER_H
 
 #include "stdafx.h"
+#define _CRT_SECURE_NO_WARNINGS
 
 //----------------------------------------------------------------------	
 //STL includes
@@ -262,7 +263,8 @@ class hashwrapper
 			/*
 			 * open the specified file
 			 */
-			if((file = fopen(filename.c_str(), "rb")) == NULL)
+			fopen_s(&file, filename.c_str(), "rb");
+			if(file == NULL)
 			{
 				throw hlException(HL_FILE_READ_ERROR,
 						  "Cannot read file \"" + 

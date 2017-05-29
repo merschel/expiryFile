@@ -47,7 +47,7 @@ void Hash::compute(std::string path){
 	try {
 		hash = hw->getHashFromFile(path);
 	}
-	catch (hlException &e) {
+	catch (hlException e) {
 		throw Exception(8);
 	}
 }

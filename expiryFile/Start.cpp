@@ -96,7 +96,7 @@ void Start::list_Mode(){
 	fileList.print();
 	std::cout << "Type r for remove or q for quit." << std::endl;
 	std::cout << std::endl;
-	switch (getche()) {
+	switch (_getche()) {
 	case 'r':
 		list_Mode_r(&fileList);
 		break;

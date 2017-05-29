@@ -1,6 +1,6 @@
 # Warning information
 
-First! The programm works (at least for me) BUT since these project is in a early state I do NOT recommend to use this programm.
+First! The programm works (at least for me) BUT since these project is in a early state I do NOT recommend to use this programm. I accept no liability for damages.
 
 # Idea behind this project
 

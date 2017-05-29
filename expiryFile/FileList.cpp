@@ -88,7 +88,7 @@ void FileList::save() {
 void FileList::print() {
 	int id = 1;
 	int s = fileList.size();
-	int m = (s == 0) ? 1 : floor(log10(s)) + 1;
+	int m = (s == 0) ? 1 : (int)(floor(log10(s)) + 1);
 		
 	std::cout << std::endl;
 	std::cout << "List Mode" << std::endl;
@@ -99,7 +99,7 @@ void FileList::print() {
 	
 	for (it = fileList.begin(); it != fileList.end(); it++, id++) { // print the list to the screen
 		TempFile tempFile = *it;
-		std::cout << "| " << std::string(m-(floor(log10(id)) + 1),' ') << id
+		std::cout << "| " << std::string(m-(int)(floor(log10(id)) + 1),' ') << id
 				  << " | " << tempFile.get_hash().to_string()
 			      << " | " << tempFile.get_expiry_date().to_string()
 			      << "  |   " << tempFile.get_modus() 
@@ -115,12 +115,12 @@ void FileList::add(std::string path, Date expiry_date, std::string modus) {
 	fileList.push_back(tempFile);
 }
 
-void FileList::remove(int id) {
+void FileList::remove(unsigned int id) {
 	if(id <= 0 || id > fileList.size()){
 		throw Exception(10);
 	}
 	it = fileList.begin();
-	std:advance(it,id-1);
+	std::advance(it,id-1);
 	fileList.erase(it);
 }
 
@@ -171,7 +171,7 @@ void FileList::SearchAndTreat() {
 			if (!existsFile(tempFile.get_path())) {
 				check_Mode_massage(tempFile, "do not exist anymore.");
 				std::cout << "    Remove from list now? (y/n) ";
-				if (getche() == 'y') {
+				if (_getche() == 'y') {
 					std::cout << std::endl;
 					remove();
 					continue;
@@ -183,7 +183,7 @@ void FileList::SearchAndTreat() {
 			if (!tempFile.get_hash().compare(hash)) { // If the file has change do not delete it
 				check_Mode_massage(tempFile, "has changed.");
 				std::cout << "    Remove from list now? (y/n) ";
-				if (getche() == 'y') {
+				if (_getche() == 'y') {
 					std::cout << std::endl;
 					remove();
 					continue;
@@ -241,7 +241,7 @@ void FileList::check_Mode_1(TempFile tempFile) {
 		remove();
 		check_Mode_massage(tempFile, "has deleted.");
 		std::cout << "    Press any key to go further! ";
-		getche();
+		_getche();
 	}
 	else {
 		std::cerr << "can not delete the file " << tempFile.get_path() << std::endl;
@@ -252,7 +252,7 @@ void FileList::check_Mode_1(TempFile tempFile) {
 void FileList::check_Mode_2(TempFile tempFile) {
 	check_Mode_massage(tempFile, "is registered for delete.");
 	std::cout << "    Delete File and remove from list now? (y/n) ";
-	if (getche() == 'y') {
+	if (_getche() == 'y') {
 		std::cout << std::endl;
 		if (deleteFile()) {
 			remove();
@@ -270,7 +270,7 @@ void FileList::check_Mode_2(TempFile tempFile) {
 void FileList::check_Mode_3(TempFile tempFile) {
 	check_Mode_massage(tempFile, "still exist.");
 	std::cout << "    Press any key to go further! ";
-	getche();
+	_getche();
 	it++;
 }
 
