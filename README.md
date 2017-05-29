@@ -1,6 +1,6 @@
 # Warning information
 
-First! The programm works (at least for me) BUT since these project is in a early state I do NOT recommend to use this programm. I disclaim liability for any damage caused by the use of expiryFile.
+First! The programm works (at least for me) BUT since these project is in a early state I do NOT recommend to use this programm. I disclaim liability for any damage caused by the use of expiryFile. 
 
 # Idea behind this project
 
