@@ -53,7 +53,7 @@ class FileList{
 		void print();
 		void remove(int id);
 		void remove();
-		void add(std::string path, Date expiry_date, std::string modus);
+		void add(std::string path, ExpiryDate expiry_date, std::string modus);
 		std::list<TempFile>::iterator find(Hash hash);
 		bool isFileInList(std::string path);
 		bool deleteFile();

@@ -1,7 +1,7 @@
 #pragma once
 #include "stdafx.h"
 #include "Hash.h"
-#include "Date.h"
+#include "ExpiryDate.h"
 #include <string>
 class TempFile {
 	private:
@@ -12,7 +12,7 @@ class TempFile {
 		
 		Hash hash;
 		std::string path;
-		Date expiry_date;
+		ExpiryDate expiryDate;
 		std::string modus;
 	
 		// *****************
@@ -36,8 +36,8 @@ class TempFile {
 		// Constructor
 		
 		TempFile();
-		TempFile(Hash _hash, std::string _path, Date _expiry_date, std::string _modus);
-		TempFile(std::string _path, Date _expiry_date, std::string _modus);
+		TempFile(Hash _hash, std::string _path, ExpiryDate _expiryDate, std::string _modus);
+		TempFile(std::string _path, ExpiryDate _expiryDate, std::string _modus);
 		
 		// Destructor
 		
@@ -46,7 +46,7 @@ class TempFile {
 		// Getter
 		Hash get_hash();
 		std::string get_path();
-		Date get_expiry_date();
+		ExpiryDate get_expiryDate();
 		std::string get_modus();
 		
 		// Setter

@@ -3,7 +3,6 @@
 #include "FileList.h"
 #include "Exception.h"
 #include <iostream>
-#include "Input.h"
 #include <math.h>  
 #include <conio.h>
 // *****************
@@ -46,7 +45,7 @@ void FileList::load() {
 	std::ifstream file(LIST_NAME);
 	if (file.is_open()) {
 		Hash hash;
-		Date expiry_date;
+		ExpiryDate expiry_date;
 		while (getline(file, line)) { //go through the file 
 			std::istringstream ss(line);   // in the file: hash, path, date, modus
 			getline(ss, hash_string, LIST_DELIMITER);
@@ -54,7 +53,7 @@ void FileList::load() {
 			getline(ss, expiry_date_string, LIST_DELIMITER);
 			getline(ss, modus, LIST_DELIMITER);
 			hash.set_hash(hash_string);
-			expiry_date.set_date(expiry_date_string);
+			expiry_date.set_expiryDate(expiry_date_string);
 			TempFile tempFile(hash, path, expiry_date, modus);    // <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< Vieleicht auslagern
 			fileList.push_back(tempFile);
 		}
@@ -75,7 +74,7 @@ void FileList::save() {
 			TempFile tempFile = *it;
 			file << tempFile.get_hash().to_string() << LIST_DELIMITER
 				 << tempFile.get_path() << LIST_DELIMITER
-				 << tempFile.get_expiry_date().to_string() << LIST_DELIMITER
+				 << tempFile.get_expiryDate().to_string() << LIST_DELIMITER
 				 << tempFile.get_modus() << std::endl;
 		}
 		file.close();
@@ -101,7 +100,7 @@ void FileList::print() {
 		TempFile tempFile = *it;
 		std::cout << "| " << std::string(m-(floor(log10(id)) + 1),' ') << id
 				  << " | " << tempFile.get_hash().to_string()
-			      << " | " << tempFile.get_expiry_date().to_string()
+			      << " | " << tempFile.get_expiryDate().to_string()
 			      << "  |   " << tempFile.get_modus() 
 			      << "   | " << tempFile.get_path() << std::endl;
 	}
@@ -110,7 +109,7 @@ void FileList::print() {
 	std::cout << "--------------------------------" << std::endl;
 }
 
-void FileList::add(std::string path, Date expiry_date, std::string modus) {
+void FileList::add(std::string path, ExpiryDate expiry_date, std::string modus) {
 	TempFile tempFile(path, expiry_date, modus);
 	fileList.push_back(tempFile);
 }
@@ -120,7 +119,7 @@ void FileList::remove(int id) {
 		throw Exception(10);
 	}
 	it = fileList.begin();
-	std:advance(it,id-1);
+	std::advance(it,id-1);
 	fileList.erase(it);
 }
 
@@ -165,13 +164,13 @@ void FileList::SearchAndTreat() {
 	//for (it = fileList.begin(); it != fileList.end(); it++) {
 	while (it != fileList.end()) {
 		TempFile tempFile = *it;
-		if (!tempFile.get_expiry_date().isDateInFuture()) { // if the file is rotten
-			
+		//if (!tempFile.get_expiry_date().isDateInFuture()) { // if the file is rotten
+		if(true){
 			// check whether the file still exist
 			if (!existsFile(tempFile.get_path())) {
 				check_Mode_massage(tempFile, "do not exist anymore.");
 				std::cout << "    Remove from list now? (y/n) ";
-				if (getche() == 'y') {
+				if (_getche() == 'y') {
 					std::cout << std::endl;
 					remove();
 					continue;
@@ -183,7 +182,7 @@ void FileList::SearchAndTreat() {
 			if (!tempFile.get_hash().compare(hash)) { // If the file has change do not delete it
 				check_Mode_massage(tempFile, "has changed.");
 				std::cout << "    Remove from list now? (y/n) ";
-				if (getche() == 'y') {
+				if (_getche() == 'y') {
 					std::cout << std::endl;
 					remove();
 					continue;
@@ -241,7 +240,7 @@ void FileList::check_Mode_1(TempFile tempFile) {
 		remove();
 		check_Mode_massage(tempFile, "has deleted.");
 		std::cout << "    Press any key to go further! ";
-		getche();
+		_getche();
 	}
 	else {
 		std::cerr << "can not delete the file " << tempFile.get_path() << std::endl;
@@ -252,7 +251,7 @@ void FileList::check_Mode_1(TempFile tempFile) {
 void FileList::check_Mode_2(TempFile tempFile) {
 	check_Mode_massage(tempFile, "is registered for delete.");
 	std::cout << "    Delete File and remove from list now? (y/n) ";
-	if (getche() == 'y') {
+	if (_getche() == 'y') {
 		std::cout << std::endl;
 		if (deleteFile()) {
 			remove();
@@ -270,7 +269,7 @@ void FileList::check_Mode_2(TempFile tempFile) {
 void FileList::check_Mode_3(TempFile tempFile) {
 	check_Mode_massage(tempFile, "still exist.");
 	std::cout << "    Press any key to go further! ";
-	getche();
+	_getche();
 	it++;
 }
 
@@ -287,7 +286,7 @@ void FileList::check_Mode_massage(TempFile tempFile, std::string text) {
 	std::cout << std::endl;
 	std::cout << "    " << text << std::endl;
 	std::cout << std::endl;
-	std::cout << "    Expiry date: " << tempFile.get_expiry_date().to_string() << std::endl;
+	std::cout << "    Expiry date: " << tempFile.get_expiryDate().to_string() << std::endl;
 	std::cout << std::endl;
 	std::cout << std::endl;
 }

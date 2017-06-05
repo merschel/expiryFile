@@ -16,17 +16,17 @@
 TempFile::TempFile(){
 }
 
-TempFile::TempFile(Hash _hash, std::string _path, Date _expiry_date, std::string _modus) {
+TempFile::TempFile(Hash _hash, std::string _path, ExpiryDate _expiryDate, std::string _modus) {
 	hash = _hash;
 	path = _path;
-	expiry_date = _expiry_date;
+	expiryDate = _expiryDate;
 	modus = _modus;
 }
 
-TempFile::TempFile(std::string _path, Date _expiry_date, std::string _modus) {
+TempFile::TempFile(std::string _path, ExpiryDate _expiryDate, std::string _modus) {
 	hash.compute(_path);
 	path = _path;
-	expiry_date = _expiry_date;
+	expiryDate = _expiryDate;
 	modus = _modus;
 }
 		
@@ -41,8 +41,8 @@ Hash TempFile::get_hash(){
 	return hash;
 }
 
-Date TempFile::get_expiry_date(){
-	return expiry_date;
+ExpiryDate TempFile::get_expiryDate(){
+	return expiryDate;
 }
 
 std::string TempFile::get_modus(){

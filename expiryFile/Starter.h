@@ -1,15 +1,18 @@
 #pragma once
-#include "Input.h"
 #include "FileList.h"
-class Start{
+class Starter{
 	private:
 		// ********************
 		// properties (private)
 		// ********************
 		
-		Input input;
 		int argc;
 		char **argv;
+
+		std::string path;
+		ExpiryDate expiry_date;
+		std::string modus;
+		bool ok;
 
 		// *****************
 		// methods (private)
@@ -23,7 +26,10 @@ class Start{
 		void list_Mode_o(FileList *fileList);
 		void check_Mode();
 		void help_Mode();
-		bool existsFile(std::string path);
+		bool existsFile(std::string *path);
+
+		char extract_prog_mode();
+		void extract_input_values();
 
 	public:
 		
@@ -39,11 +45,11 @@ class Start{
 		
 		// Constructor
 		
-		Start();
+		Starter();
 
 		// Destructor
 
-		~Start();
+		~Starter();
 
 		// Getter
 		
@@ -55,6 +61,5 @@ class Start{
 
 		// other functions
 		
-		void handleInput();
-		
+		void run();
 };
