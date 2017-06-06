@@ -189,7 +189,7 @@ void Starter::extract_input_values() {
 		}
 		else if (std::string(argv[i]) == "-d") { // expiry date
 			expiry_date.set_expiryDate(std::string(argv[i + 1]));
-			if (!expiry_date.isValid()) {
+			if (!expiry_date.isValid() || !expiry_date.isDateInFuture()) {
 				throw Exception(1); // the given date is nod valid.
 			}
 		}

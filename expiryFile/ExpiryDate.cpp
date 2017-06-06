@@ -45,11 +45,13 @@ void ExpiryDate::set_expiryDate(std::string _expiryDate){
 	else {
 		if (strptime(_expiryDate.c_str(), "%d.%m.%Y", &ts) == NULL) {
 			valid = false;
+			return;
 		}
 		// Check whether the year is valid	
 		if (ts.tm_year < -900) { // maybe the given year format is %y, not %Y.
 			if (strptime(_expiryDate.c_str(), "%d.%m.%y", &ts) == NULL) {
 				valid = false;
+				return;
 			}
 		}
 
@@ -61,16 +63,12 @@ void ExpiryDate::set_expiryDate(std::string _expiryDate){
 		expiryDate = mktime(&ts);
 		if (expiryDate == -1) {
 			valid = false;
+			return;
 		}
 
-		// so far everythink went fine, 
-		// but additional the date have to be in the futhure.
-		if (expiryDate - time(NULL) > 0) {
-			valid = true;
-		}
-		else {
-			valid = false;
-		}
+		// everythink is fine
+		valid = true;
+		
 	}
 }
 
@@ -120,3 +118,6 @@ void ExpiryDate::extractTime(std::string str, char s) {
 	}
 }
 
+bool ExpiryDate::isDateInFuture() {
+	return time(0) < expiryDate;
+}

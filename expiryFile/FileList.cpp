@@ -1,3 +1,4 @@
+
 #include "stdafx.h"
 #include "defVar.h"
 #include "FileList.h"
@@ -164,8 +165,8 @@ void FileList::SearchAndTreat() {
 	//for (it = fileList.begin(); it != fileList.end(); it++) {
 	while (it != fileList.end()) {
 		TempFile tempFile = *it;
-		//if (!tempFile.get_expiry_date().isDateInFuture()) { // if the file is rotten
-		if(true){
+		if (!tempFile.get_expiryDate().isDateInFuture()) { // if the file is rotten
+		//if(true){
 			// check whether the file still exist
 			if (!existsFile(tempFile.get_path())) {
 				check_Mode_massage(tempFile, "do not exist anymore.");

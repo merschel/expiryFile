@@ -48,4 +48,5 @@ class ExpiryDate{
 		bool isValid();
 		std::string to_string();
 		void ExpiryDate::extractTime(std::string str, char s);
+		bool ExpiryDate::isDateInFuture();
 };
